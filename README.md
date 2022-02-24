@@ -7,7 +7,7 @@
 
 **Технологии**
 
-Html / Css / БЭМ / БЭМ Nested / Адаптивная верска
+Html / Css / БЭМ / БЭМ Nested / Адаптивная верска / JavaScript
 
 **GitHub Pages**
 

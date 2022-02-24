@@ -9,7 +9,6 @@
 <body class="page">
   <header class="header">
     <img src="./images/logo.svg" alt="Логотип" class="header__logo">
-    <div class="header__border-bottom"></div>
   </header>
   <main class="content">
     <section class="profile">
@@ -18,12 +17,12 @@
         <div class="profile__info-name">
           <div class="profile__info-group">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <div class="profile__info-button"></div>
+            <button type="button" class="profile__info-button"></button>
           </div>
           <p class="profile__sub-name">Исследователь океана</p>
         </div>
       </div>
-      <div class="profile__button"></div>
+      <button type="button" class="profile__button"></button>
     </section>
     <section class="elements">
       <ul class="elements__grid">
@@ -31,42 +30,42 @@
           <img src="./images/photo1.jpg" alt="Сноуборд" class="element__image">
           <div class="element__bottom">
             <h2 class="element__text">Сноуборд</h2>
-            <div class="element__like"></div>
+            <button type="button" class="element__like"></button>
           </div>
         </li>
         <li class="element">
           <img src="./images/photo2.jpg" alt="Ледник" class="element__image">
           <div class="element__bottom">
             <h2 class="element__text">Ледник</h2>
-            <div class="element__like"></div>
+            <button type="button" class="element__like"></button>
           </div>
         </li>
         <li class="element">
           <img src="./images/photo3.jpg" alt="Дом в горах" class="element__image">
           <div class="element__bottom">
             <h2 class="element__text">Дом в заснеженных хорах горах</h2>
-            <div class="element__like"></div>
+            <button type="button" class="element__like"></button>
           </div>
         </li>
         <li class="element">
           <img src="./images/photo4.jpg" alt="Снег у воды" class="element__image">
           <div class="element__bottom">
             <h2 class="element__text">Заснеженный берег</h2>
-            <div class="element__like"></div>
+            <button type="button" class="element__like"></button>
           </div>
         </li>
         <li class="element">
           <img src="./images/photo5.jpg" alt="Машина" class="element__image">
           <div class="element__bottom">
             <h2 class="element__text">Машина</h2>
-            <div class="element__like"></div>
+            <button type="button" class="element__like"></button>
           </div>
         </li>
         <li class="element">
           <img src="./images/photo6.jpg" alt="Лыжник на трассе" class="element__image">
           <div class="element__bottom">
             <h2 class="element__text">Лыжник на трассе</h2>
-            <div class="element__like"></div>
+            <button type="button" class="element__like"></button>
           </div>
         </li>
       </ul>
@@ -74,11 +73,11 @@
   </main>
   <section class="popup">
     <div class="popup__container">
-      <div class="popup__close"></div>
-      <form class="popup__form">
-        <h2 class="popup__title">Редактировать профиль</h2>
-        <input class="popup__input" placeholder="Жак-Ив Кусто" type="text">
-        <input class="popup__input" placeholder="Исследователь океана" type="text">
+      <button type="button" class="popup__close"></button>
+      <h2 class="popup__title">Редактировать профиль</h2>
+      <form class="popup__form" name="popup-form">
+        <input class="popup__input popup__input_content_name" placeholder="Жак-Ив Кусто" type="text" name="name">
+        <input class="popup__input popup__input_content_sub-name" placeholder="Исследователь океана" type="text" name="sub-name">
         <button class="popup__button" type="submit">Сохранить</button>
       </form>
     </div>

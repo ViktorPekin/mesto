@@ -4,7 +4,7 @@
   justify-content: space-between;
 }
 
-@media screen and (max-width: 879px) {
+@media screen and (max-width: 920px) {
   .profile {
     justify-content: space-around;
   }

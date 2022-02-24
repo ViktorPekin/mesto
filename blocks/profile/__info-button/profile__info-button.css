@@ -3,6 +3,8 @@
   width: 24px;
   height: 24px;
   margin: 6px 0 0 18px;
+  border: none;
+  cursor: pointer;
 }
 
 .profile__info-button:hover {

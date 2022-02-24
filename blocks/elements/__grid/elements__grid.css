@@ -10,7 +10,7 @@
   justify-content: center;
 }
 
-@media screen and (max-width: 879px) {
+@media screen and (max-width: 920px) {
   .elements__grid {
     grid-template-columns: repeat(2, 282px);
     grid-template-rows: repeat(3, 361px);
