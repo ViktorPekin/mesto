@@ -26,65 +26,43 @@
     </section>
     <section class="elements">
       <ul class="elements__grid">
-        <li class="element">
-          <img src="./images/photo1.jpg" alt="Сноуборд" class="element__image">
-          <div class="element__bottom">
-            <h2 class="element__text">Сноуборд</h2>
-            <button type="button" class="element__like"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/photo2.jpg" alt="Ледник" class="element__image">
-          <div class="element__bottom">
-            <h2 class="element__text">Ледник</h2>
-            <button type="button" class="element__like"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/photo3.jpg" alt="Дом в горах" class="element__image">
-          <div class="element__bottom">
-            <h2 class="element__text">Дом в заснеженных хорах горах</h2>
-            <button type="button" class="element__like"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/photo4.jpg" alt="Снег у воды" class="element__image">
-          <div class="element__bottom">
-            <h2 class="element__text">Заснеженный берег</h2>
-            <button type="button" class="element__like"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/photo5.jpg" alt="Машина" class="element__image">
-          <div class="element__bottom">
-            <h2 class="element__text">Машина</h2>
-            <button type="button" class="element__like"></button>
-          </div>
-        </li>
-        <li class="element">
-          <img src="./images/photo6.jpg" alt="Лыжник на трассе" class="element__image">
-          <div class="element__bottom">
-            <h2 class="element__text">Лыжник на трассе</h2>
-            <button type="button" class="element__like"></button>
-          </div>
-        </li>
       </ul>
     </section>
   </main>
-  <section class="popup">
+  <footer class="footer">
+    <p class="footer__copiright">&#xA9; 2020 Mesto Russia</p>
+  </footer>
+  <section class="popup popup_edit-profile">
     <div class="popup__container">
       <button type="button" class="popup__close"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
-      <form class="popup__form" name="popup-form">
+      <form class="popup__form popup__form_edit-profile" name="popup-form">
         <input class="popup__input popup__input_content_name" placeholder="Жак-Ив Кусто" type="text" name="name">
         <input class="popup__input popup__input_content_sub-name" placeholder="Исследователь океана" type="text" name="sub-name">
         <button class="popup__button" type="submit">Сохранить</button>
       </form>
     </div>
   </section>
-  <footer class="footer">
-    <p class="footer__copiright">&#xA9; 2020 Mesto Russia</p>
-  </footer>
+  <section class="popup popup_cards-add">
+    <div class="popup__container">
+      <button type="button" class="popup__close"></button>
+      <h2 class="popup__title">Новое место</h2>
+      <form class="popup__form popup__form_cards-add" name="popup-form">
+        <input class="popup__input popup__input_cards_name" placeholder="Название" type="text" name="name">
+        <input class="popup__input popup__input_cards_link" placeholder="Ссылка на картинку" type="text" name="sub-name">
+        <button class="popup__button" type="submit">Создать</button>
+      </form>
+    </div>
+  </section>
+  <template class="template-element">
+    <li class="element">
+      <img src="./images/photo1.jpg" alt="Сноуборд" class="element__image">
+      <div class="element__bottom">
+        <h2 class="element__text">Сноуборд</h2>
+        <button type="button" class="element__like"></button>
+      </div>
+    </li>
+  </template>
   <script src="./scripts/index.js"></script>
 </body>
 </html>
