@@ -1,0 +1,14 @@
+.element__delite {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 18px;
+  height: 19px;
+  background: center/cover no-repeat url(../../../images/delite-card.svg);
+  border: none;
+  cursor: pointer;
+}
+
+.element__delite:hover {
+  opacity: 0.6;
+}
