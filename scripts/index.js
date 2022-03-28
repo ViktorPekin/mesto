@@ -3,6 +3,7 @@ const buttonOpenPopupCards = document.querySelector('.profile__button');
 const profileName = document.querySelector('.profile__name');
 const profileSubName = document.querySelector('.profile__sub-name');
 
+const popup = document.querySelectorAll('.popup');
 const buttonClosePopup = document.querySelectorAll('.popup__close');
 const popupProfile = document.querySelector('.popup_edit-profile');
 const popupFormProfile = popupProfile.querySelector('.popup__form_edit-profile');
@@ -54,8 +55,33 @@ buttonClosePopup.forEach((item) => {
   });
 });
 
+popup.forEach((item) => {
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closePopup(item);
+    }
+  });
+  item.addEventListener('mousedown', (event) => {
+    if (event.target === item) {
+      closePopup(item);
+    }
+  });
+});
+
 popupImageClose.addEventListener('click', () => {
   closePopup(popupImage);
+});
+
+popupImage.addEventListener('mousedown', (event) => {
+  if (event.target == popupImage) {
+    closePopup(popupImage);
+  }
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') {
+    closePopup(popupImage);
+  }
 });
 
 function closePopup(popup) {
@@ -106,4 +132,3 @@ function openPopupImage (evt) {
 }
 
 initialCards.forEach(addCards);
-
