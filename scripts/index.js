@@ -3,7 +3,7 @@ const buttonOpenPopupCards = document.querySelector('.profile__button');
 const profileName = document.querySelector('.profile__name');
 const profileSubName = document.querySelector('.profile__sub-name');
 
-const popup = document.querySelectorAll('.popup');
+
 const buttonClosePopup = document.querySelectorAll('.popup__close');
 const popupProfile = document.querySelector('.popup_edit-profile');
 const popupFormProfile = popupProfile.querySelector('.popup__form_edit-profile');
@@ -24,6 +24,8 @@ const templateElement = document.querySelector('.template-element').content;
 const elementsGrid = document.querySelector('.elements__grid');
 
 function openPopup(pop) {
+  document.addEventListener('keydown',(event) => closePopupOnEscape(pop, event));
+  pop.addEventListener('click', (event) => closePopupOnOverlay(pop, event));
   pop.classList.add('popup_opened');
 }
 
@@ -35,9 +37,9 @@ function savePopup(evt) {
 }
 
 function openPropfilePopup() {
-  openPopup(popupProfile);
   popupInputName.value = profileName.textContent;
   popupInputSubName.value = profileSubName.textContent;
+  openPopup(popupProfile);
 }
 
 buttonOpenPopupProfil.addEventListener('click', () => {
@@ -55,37 +57,26 @@ buttonClosePopup.forEach((item) => {
   });
 });
 
-popup.forEach((item) => {
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') {
-      closePopup(item);
-    }
-  });
-  item.addEventListener('mousedown', (event) => {
-    if (event.target === item) {
-      closePopup(item);
-    }
-  });
-});
-
 popupImageClose.addEventListener('click', () => {
   closePopup(popupImage);
 });
 
-popupImage.addEventListener('mousedown', (event) => {
-  if (event.target == popupImage) {
-    closePopup(popupImage);
+function closePopupOnOverlay (pop, event) {
+  if (event.target === pop) {
+    closePopup(pop);
   }
-});
+}
 
-document.addEventListener('keydown', (event) => {
+function closePopupOnEscape(pop, event) {
   if (event.key === 'Escape') {
-    closePopup(popupImage);
+    closePopup(pop);
   }
-});
+}
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown',(event) => closePopupOnEscape(pop, event));
+  popup.removeEventListener('click', (event) => closePopupOnOverlay(pop, event));
 }
 
 popupFormProfile.addEventListener('submit', savePopup);
