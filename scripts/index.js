@@ -24,9 +24,9 @@ const templateElement = document.querySelector('.template-element').content;
 const elementsGrid = document.querySelector('.elements__grid');
 
 function openPopup(pop) {
-  document.addEventListener('keydown',(event) => closePopupOnEscape(pop, event));
-  pop.addEventListener('click', (event) => closePopupOnOverlay(pop, event));
   pop.classList.add('popup_opened');
+  document.addEventListener('keydown', closePopupOnEscape);
+  pop.addEventListener('click', closePopupOnOverlay);
 }
 
 function savePopup(evt) {
@@ -50,33 +50,27 @@ buttonOpenPopupCards.addEventListener('click', () => {
   openPopup(popupCards);
 });
 
-buttonClosePopup.forEach((item) => {
-  item.addEventListener('click', (evt) => {
-    const popup = evt.target.closest('.popup');
-    closePopup(popup);
-  });
-});
-
-popupImageClose.addEventListener('click', () => {
-  closePopup(popupImage);
-});
-
-function closePopupOnOverlay (pop, event) {
-  if (event.target === pop) {
-    closePopup(pop);
+function closePopupOnOverlay (event) {
+  const activePopup = document.querySelector('.popup_opened');
+  if (event.target.classList.contains('popup') || event.target.classList.contains('popup__close')) {
+    closePopup(activePopup);
+  }
+  if (event.target.classList.contains('popup-image') || event.target.classList.contains('popup-image__close')) {
+    closePopup(activePopup);
   }
 }
 
-function closePopupOnEscape(pop, event) {
+function closePopupOnEscape(event) {
+  const activePopup = document.querySelector('.popup_opened');
   if (event.key === 'Escape') {
-    closePopup(pop);
+    closePopup(activePopup);
   }
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
-  document.removeEventListener('keydown',(event) => closePopupOnEscape(pop, event));
-  popup.removeEventListener('click', (event) => closePopupOnOverlay(pop, event));
+  document.removeEventListener('keydown', closePopupOnEscape);
+  popup.removeEventListener('click', closePopupOnOverlay);
 }
 
 popupFormProfile.addEventListener('submit', savePopup);
