@@ -12,9 +12,6 @@ const config = {
 function enableValidation(config) {
   const formList = Array.from(document.querySelectorAll(config.form));
   formList.forEach((formElement) => {
-    formElement.addEventListener('submit', function (evt) {
-      evt.preventDefault();
-    });
     setEventListeners(formElement, config);
   });
 }
@@ -23,7 +20,9 @@ function setEventListeners(formElement, config) {
   const inputList = Array.from(formElement.querySelectorAll(config.input));
   const buttonElement = formElement.querySelector(config.buttom);
 
-  hidingButton(formElement, inputList, buttonElement, config);
+  formElement.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+  });
 
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', function () {
@@ -31,12 +30,6 @@ function setEventListeners(formElement, config) {
       toggleButtonState(inputList, buttonElement, config);
     });
   });
-}
-
-function hidingButton(formElement, inputList, buttonElement, config) {
-  if (formElement.classList.contains(config.formCardAdd)) {
-    toggleButtonState(inputList, buttonElement, config);
-  }
 }
 
 function checkInputValidity(formElement, inputElement, config) {
@@ -54,22 +47,30 @@ function showInputError(formElement, inputElement, errorMessage, config) {
   errorElement.classList.add(config.spanError);
 }
 
-function hideInputError(formElement, inputElement) {
+function hideInputError(formElement, inputElement, config) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.remove(config.inputError);
   errorElement.classList.remove(config.spanError);
   errorElement.textContent = '';
 }
 
+function disableAddFormSubmitButton(buttonElement, config) {
+  buttonElement.classList.remove(config.buttonValid);
+  buttonElement.classList.add(config.buttonInvalid);
+  buttonElement.setAttribute('disabled', true);
+}
+
+function disableRemoveFormSubmitButton(buttonElement, config) {
+  buttonElement.classList.add(config.buttonValid);
+  buttonElement.classList.remove(config.buttonInvalid);
+  buttonElement.removeAttribute('disabled');
+}
+
 function toggleButtonState(inputList, buttonElement, config) {
   if (hasInvalidInput(inputList)) {
-    buttonElement.classList.remove(config.buttonValid);
-    buttonElement.classList.add(config.buttonInvalid);
-    buttonElement.setAttribute('disabled', '');
+    disableAddFormSubmitButton(buttonElement, config);
   } else {
-    buttonElement.classList.add(config.buttonValid);
-    buttonElement.classList.remove(config.buttonInvalid);
-    buttonElement.removeAttribute('disabled', '');
+    disableRemoveFormSubmitButton(buttonElement, config);
   }
 }
 

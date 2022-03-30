@@ -3,22 +3,22 @@ const buttonOpenPopupCards = document.querySelector('.profile__button');
 const profileName = document.querySelector('.profile__name');
 const profileSubName = document.querySelector('.profile__sub-name');
 
-
 const buttonClosePopup = document.querySelectorAll('.popup__close');
 const popupProfile = document.querySelector('.popup_edit-profile');
 const popupFormProfile = popupProfile.querySelector('.popup__form_edit-profile');
 const popupInputName = popupProfile.querySelector('.popup__input_content_name');
 const popupInputSubName = popupProfile.querySelector('.popup__input_content_sub-name');
+const popupButtonProfile = popupProfile.querySelector('.popup__button');
 
 const popupCards = document.querySelector('.popup_cards-add');
 const popupInputCardsName = popupCards.querySelector('.popup__input_cards_name');
 const popupInputCardsLink = popupCards.querySelector('.popup__input_cards_link');
 const popupFormCards = popupCards.querySelector('.popup__form_cards-add');
+const popupButtonCardAdd = popupCards.querySelector('.popup__button');
 
 const popupImage = document.querySelector('.popup-image');
 const popupImageImage = popupImage.querySelector('.popup-image__image');
 const popupImageTitle = popupImage.querySelector('.popup-image__title');
-const popupImageClose = popupImage.querySelector('.popup-image__close');
 
 const templateElement = document.querySelector('.template-element').content;
 const elementsGrid = document.querySelector('.elements__grid');
@@ -36,26 +36,29 @@ function savePopup(evt) {
   closePopup(popupProfile);
 }
 
-function openPropfilePopup() {
+function openProfilePopup() {
+  const inputList = Array.from(popupProfile.querySelectorAll(config.input));
   popupInputName.value = profileName.textContent;
   popupInputSubName.value = profileSubName.textContent;
+  inputList.forEach((inputElement) => {
+    hideInputError(popupProfile, inputElement, config);
+  });
   openPopup(popupProfile);
 }
 
 buttonOpenPopupProfil.addEventListener('click', () => {
-  openPropfilePopup();
+  openProfilePopup();
+  disableRemoveFormSubmitButton(popupButtonProfile, config);
 });
 
 buttonOpenPopupCards.addEventListener('click', () => {
   openPopup(popupCards);
+  disableAddFormSubmitButton(popupButtonCardAdd, config);
 });
 
 function closePopupOnOverlay (event) {
   const activePopup = document.querySelector('.popup_opened');
   if (event.target.classList.contains('popup') || event.target.classList.contains('popup__close')) {
-    closePopup(activePopup);
-  }
-  if (event.target.classList.contains('popup-image') || event.target.classList.contains('popup-image__close')) {
     closePopup(activePopup);
   }
 }
