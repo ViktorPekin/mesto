@@ -20,7 +20,6 @@ const popupImage = document.querySelector('.popup-image');
 const popupImageImage = popupImage.querySelector('.popup-image__image');
 const popupImageTitle = popupImage.querySelector('.popup-image__title');
 
-const templateElement = document.querySelector('.template-element').content;
 const elementsGrid = document.querySelector('.elements__grid');
 
 function openPopup(pop) {
@@ -78,45 +77,51 @@ function closePopup(popup) {
 
 popupFormProfile.addEventListener('submit', savePopup);
 
-popupFormCards.addEventListener('submit', addNewCards);
+class Card {
+  constructor(card, template) {
+    this._card = card;
+    this._template = document.querySelector(template).content;
+  }
 
-function renderCards (card) {
-  const element = templateElement.querySelector('.element').cloneNode(true);
-  element.querySelector('.element__text').textContent = card.name;
-  element.querySelector('.element__image').src = card.link;
-  element.querySelector('.element__delite').addEventListener('click', deliteCards);
-  element.querySelector('.element__like').addEventListener('click', toggleLikeCards);
-  element.querySelector('.element__image').addEventListener('click', openPopupImage);
-  return element;
+  renderCards () {
+    const element = this._template.querySelector('.element').cloneNode(true);
+    element.querySelector('.element__text').textContent = this._card.name;
+    element.querySelector('.element__image').src = this._card.link;
+    element.querySelector('.element__delite').addEventListener('click', this._deliteCards);
+    element.querySelector('.element__like').addEventListener('click', this._toggleLikeCards);
+    element.querySelector('.element__image').addEventListener('click', this._openPopupImage);
+    return element;
+  }
+
+  _toggleLikeCards (evt) {
+    evt.target.classList.toggle('element__like_active');
+  }
+
+  _deliteCards (evt) {
+    const element = evt.currentTarget.closest('.element');
+    element.remove();
+  }
+
+  _openPopupImage (evt) {
+    openPopup(popupImage);
+    popupImageImage.src = evt.target.src;
+    popupImageTitle.textContent = evt.target.nextElementSibling.
+    firstElementChild.textContent;
+  }
 }
 
-function addCards (card) {
-  elementsGrid.prepend(renderCards(card));
-}
-
-function addNewCards(evt) {
-  evt.preventDefault();
+function createNewCard() {
   const newElement = {name : popupInputCardsName.value, link : popupInputCardsLink.value};
-  addCards(newElement);
+  const card = new Card(newElement, '.template-element');
+  elementsGrid.prepend(card.renderCards());
   closePopup(popupCards);
   popupInputCardsName.value = '';
   popupInputCardsLink.value = '';
 }
 
-function toggleLikeCards (evt) {
-  evt.target.classList.toggle('element__like_active');
-}
+popupFormCards.addEventListener('submit', createNewCard);
 
-function deliteCards (evt) {
-  const element = evt.currentTarget.closest('.element');
-  element.remove();
-}
-
-function openPopupImage (evt) {
-  openPopup(popupImage);
-  popupImageImage.src = evt.target.src;
-  popupImageTitle.textContent = evt.target.nextElementSibling.
-  firstElementChild.textContent;
-}
-
-initialCards.forEach(addCards);
+initialCards.forEach((item) => {
+  const card = new Card(item, '.template-element');
+  elementsGrid.prepend(card.renderCards());
+});
