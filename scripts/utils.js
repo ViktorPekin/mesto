@@ -1,7 +1,7 @@
-export function openPopup(pop) {
-  pop.classList.add('popup_opened');
+export function openPopup(popup) {
+  popup.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupOnEscape);
-  pop.addEventListener('click', closePopupOnOverlay);
+  popup.addEventListener('click', closePopupOnOverlay);
 }
 
 export function closePopupOnOverlay (event) {

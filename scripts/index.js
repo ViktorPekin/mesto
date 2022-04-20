@@ -1,6 +1,8 @@
-import {FormValidator, config} from './validate.js';
-import {initialCards, Card} from './card.js';
+import {FormValidator} from './Validate.js';
+import {Card} from './Card.js';
 import {openPopup, closePopup} from './utils.js';
+import {initialCards} from './initialCards.js';
+import {config} from './config.js';
 
 const buttonOpenPopupProfil = document.querySelector('.profile__info-button');
 const buttonOpenPopupCards = document.querySelector('.profile__button');
@@ -27,7 +29,7 @@ const validateCards = new FormValidator(config, popupCards);
 validateProfile.enableValidation();
 validateCards.enableValidation();
 
-function savePopup(evt) {
+function saveDataPopupProfile(evt) {
   evt.preventDefault();
   profileName.textContent = popupInputName.value;
   profileSubName.textContent = popupInputSubName.value;
@@ -70,7 +72,7 @@ function createNewCard() {
   popupInputCardsLink.value = '';
 }
 
-popupFormProfile.addEventListener('submit', savePopup);
+popupFormProfile.addEventListener('submit', saveDataPopupProfile);
 
 buttonOpenPopupProfil.addEventListener('click', () => {
   openProfilePopup();
