@@ -8,6 +8,22 @@ export class FormValidator {
     this._setEventListeners();
   }
 
+  resetErrors() {
+    const inputList = Array.from(this._formElement.querySelectorAll(this._config.input));
+    inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement);
+    });
+  }
+
+  disabledButtonAdd(boolean) {
+    const buttonElement = this._formElement.querySelector(this._config.buttom);
+    if(boolean === true) {
+      this._disableAddFormSubmitButton(buttonElement);
+    } else {
+      this._disableRemoveFormSubmitButton(buttonElement);
+    }
+  }
+
   _setEventListeners() {
     const inputList = Array.from(this._formElement.querySelectorAll(this._config.input));
     const buttonElement = this._formElement.querySelector(this._config.buttom);
