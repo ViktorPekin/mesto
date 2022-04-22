@@ -13,13 +13,11 @@ const popupProfile = document.querySelector('.popup_edit-profile');
 const popupFormProfile = popupProfile.querySelector('.popup__form_edit-profile');
 const popupInputName = popupProfile.querySelector('.popup__input_content_name');
 const popupInputSubName = popupProfile.querySelector('.popup__input_content_sub-name');
-const popupButtonProfile = popupProfile.querySelector('.popup__button');
 
 const popupCards = document.querySelector('.popup_cards-add');
 const popupInputCardsName = popupCards.querySelector('.popup__input_cards_name');
 const popupInputCardsLink = popupCards.querySelector('.popup__input_cards_link');
 const popupFormCards = popupCards.querySelector('.popup__form_cards-add');
-const popupButtonCards = popupCards.querySelector('.popup__button');
 
 const elementsGrid = document.querySelector('.elements__grid');
 
@@ -46,18 +44,6 @@ function openProfilePopup() {
 function openCardsPopup() {
   openPopup(popupCards);
   validateCards.resetErrors();
-}
-
-function disableAddSubmitButton(buttonElement) {
-  buttonElement.classList.remove('popup__button_valid');
-  buttonElement.classList.add('popup__button_invalid');
-  buttonElement.setAttribute('disabled', true);
-}
-
-function disableRemoveSubmitButton(buttonElement) {
-  buttonElement.classList.add('popup__button_valid');
-  buttonElement.classList.remove('popup__button_invalid');
-  buttonElement.removeAttribute('disabled');
 }
 
 function createNewCard() {
