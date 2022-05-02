@@ -69,9 +69,117 @@ buttonOpenPopupCards.addEventListener('click', () => {
 
 popupFormCards.addEventListener('submit', createNewCard);
 
-initialCards.forEach((item) => {
+/* initialCards.forEach((item) => {
   const card = new Card(item, '.template-element');
   elementsGrid.prepend(card.renderCards());
-});
+}); */
 
+class Section {
+  constructor({data, renderer}, containerSelector) {
+    this._renderedItems = data;
+    this._renderer = renderer;
+    this._container = document.querySelector(containerSelector);
+  }
+
+  renderItems() {
+    this._renderedItems.forEach(item => {
+      this._renderer(item);
+    });
+  }
+
+  setItem(element) {
+    this._container.prepend(element);
+  }
+}
+
+const defaultCardList = new Section({
+  data: initialCards,
+  renderer: (item) => {
+    const card = new Card(item, '.template-element');
+    const cardElement = card.renderCards();
+    defaultCardList.setItem(cardElement);
+  }
+}, '.elements__grid');
+
+defaultCardList.renderItems();
+
+class Popup {
+  constructor(popupSelector) {
+    this._popupSelector = popupSelector;
+  }
+  open() {
+    this._popupSelector.classList.add('popup_opened');
+  }
+  close() {
+    this._popupSelector.classList.remove('popup_opened');
+  }
+  _handleEscClose(event) {
+    const activePopup = document.querySelector('.popup_opened');
+
+    if (event.key === 'Escape') {
+      this.close(activePopup);
+    }
+  }
+  setEventListeners(event) {
+    const activePopup = document.querySelector('.popup_opened');
+
+    if (event.target.classList.contains('popup') || event.target.classList.contains('popup__close')) {
+      this.close(activePopup);
+    }
+  }
+}
+
+class PopupWithImage extends Popup {
+  constructor(popupSelector){
+    super(popupSelector);
+  }
+  open() {
+    const popupImage = document.querySelector('.popup-image');
+    const popupImageImage = popupImage.querySelector('.popup-image__image');
+    const popupImageTitle = popupImage.querySelector('.popup-image__title');
+    popupImageImage.src = evt.target.src;
+    popupImageImage.alt = evt.target.nextElementSibling.
+    firstElementChild.textContent;
+    popupImageTitle.textContent = evt.target.nextElementSibling.
+    firstElementChild.textContent;
+    super.open();
+  }
+}
+
+class PopupWithForm extends Popup {
+  constructor(popupSelector, submitForm){
+    super(popupSelector);
+    this._submitForm = submitForm;
+  }
+
+  _getInputValues() {
+    const input = popupSelector.querySelectorAll('.popup__input');
+  }
+
+  setEventListeners(event) {
+    super.setEventListeners();
+    //
+  }
+  close() {
+    super.close();
+    //
+  }
+}
+
+class UserInfo {
+  constructor({profileName, profileSubName}) {
+    this._profileName = profileName;
+    this._profileSubName = profileSubName;
+  }
+
+  getUserInfo() {
+    popupInputName.value = _profileName.textContent;
+    popupInputSubName.value = _profileSubName.textContent;
+  }
+
+  setUserInfo() {
+    _profileName.textContent = popupInputName.value;
+    _profileSubName.textContent = popupInputSubName.value;
+  }
+}
 
