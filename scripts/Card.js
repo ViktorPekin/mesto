@@ -1,9 +1,10 @@
 import {openPopup} from './utils.js';
 
 export class Card {
-  constructor(card, selectorTemplate) {
-    this._card = card;
+  constructor({item, handleCardClick}, selectorTemplate) {
+    this._card = item;
     this._template = document.querySelector(selectorTemplate).content;
+    this._handleCardClick = handleCardClick;
   }
 
   renderCards () {
@@ -13,7 +14,7 @@ export class Card {
     element.querySelector('.element__image').alt = this._card.name;
     element.querySelector('.element__delite').addEventListener('click', this._deliteCards);
     element.querySelector('.element__like').addEventListener('click', this._toggleLikeCards);
-    element.querySelector('.element__image').addEventListener('click', this._openPopupImage);
+    //element.querySelector('.element__image').addEventListener('click', this._openPopupImage);
     return element;
   }
 
@@ -30,7 +31,12 @@ export class Card {
     element.remove();
   }
 
-  _openPopupImage (evt) {
+  cardClick() {
+    const element = this._getTemplate();
+    //this._handleCardClick();
+    element.querySelector('.element__image').addEventListener('click',(evt) => this._handleCardClick(evt));
+  }
+  /* _openPopupImage (evt) {
     const popupImage = document.querySelector('.popup-image');
     const popupImageImage = popupImage.querySelector('.popup-image__image');
     const popupImageTitle = popupImage.querySelector('.popup-image__title');
@@ -40,5 +46,5 @@ export class Card {
     firstElementChild.textContent;
     popupImageTitle.textContent = evt.target.nextElementSibling.
     firstElementChild.textContent;
-  }
+  } */
 }

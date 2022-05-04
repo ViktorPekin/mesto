@@ -92,22 +92,11 @@ class Section {
   }
 }
 
-const defaultCardList = new Section({
-  data: initialCards,
-  renderer: (item) => {
-    const card = new Card(item, '.template-element');
-    const cardElement = card.renderCards();
-    defaultCardList.setItem(cardElement);
-  }
-}, '.elements__grid');
-
-defaultCardList.renderItems();
-
 class Popup {
   constructor(popupSelector) {
-    this._popupSelector = popupSelector;
+    this._popupSelector = document.querySelector(popupSelector);
   }
-  open() {
+  open(evt) {
     this._popupSelector.classList.add('popup_opened');
   }
   close() {
@@ -133,16 +122,16 @@ class PopupWithImage extends Popup {
   constructor(popupSelector){
     super(popupSelector);
   }
-  open() {
+  open(evt) {
     const popupImage = document.querySelector('.popup-image');
     const popupImageImage = popupImage.querySelector('.popup-image__image');
     const popupImageTitle = popupImage.querySelector('.popup-image__title');
-    popupImageImage.src = evt.target.src;
+/*     popupImageImage.src = evt.target.src;
     popupImageImage.alt = evt.target.nextElementSibling.
     firstElementChild.textContent;
     popupImageTitle.textContent = evt.target.nextElementSibling.
-    firstElementChild.textContent;
-    super.open();
+    firstElementChild.textContent; */
+    super.open(evt);
   }
 }
 
@@ -153,7 +142,7 @@ class PopupWithForm extends Popup {
   }
 
   _getInputValues() {
-    const input = popupSelector.querySelectorAll('.popup__input');
+    const input = this._popupSelector.querySelectorAll('.popup__input');
   }
 
   setEventListeners(event) {
@@ -166,6 +155,24 @@ class PopupWithForm extends Popup {
   }
 }
 
+const defaultCardList = new Section({
+  data: initialCards,
+  renderer: (item) => {
+    const card = new Card({
+      item,
+      handleCardClick: (evt) => {
+        const cardClick = new PopupWithImage('.popup-image');
+        cardClick.open(evt);
+      }
+      }, '.template-element');
+    const cardElement = card.renderCards();
+    defaultCardList.setItem(cardElement);
+    card.cardClick();
+  }
+}, '.elements__grid');
+
+defaultCardList.renderItems();
+
 class UserInfo {
   constructor({profileName, profileSubName}) {
     this._profileName = profileName;
@@ -173,13 +180,13 @@ class UserInfo {
   }
 
   getUserInfo() {
-    popupInputName.value = _profileName.textContent;
-    popupInputSubName.value = _profileSubName.textContent;
+    popupInputName.value = this._profileName.textContent;
+    popupInputSubName.value =this. _profileSubName.textContent;
   }
 
   setUserInfo() {
-    _profileName.textContent = popupInputName.value;
-    _profileSubName.textContent = popupInputSubName.value;
+    this._profileName.textContent = popupInputName.value;
+    this._profileSubName.textContent = popupInputSubName.value;
   }
 }
 
