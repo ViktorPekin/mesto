@@ -14,7 +14,7 @@ export class Card {
     element.querySelector('.element__image').alt = this._card.name;
     element.querySelector('.element__delite').addEventListener('click', this._deliteCards);
     element.querySelector('.element__like').addEventListener('click', this._toggleLikeCards);
-    //element.querySelector('.element__image').addEventListener('click', this._openPopupImage);
+    element.querySelector('.element__image').addEventListener('click',this._handleCardClick);
     return element;
   }
 
@@ -30,21 +30,4 @@ export class Card {
     const element = evt.currentTarget.closest('.element');
     element.remove();
   }
-
-  cardClick() {
-    const element = this._getTemplate();
-    //this._handleCardClick();
-    element.querySelector('.element__image').addEventListener('click',(evt) => this._handleCardClick(evt));
-  }
-  /* _openPopupImage (evt) {
-    const popupImage = document.querySelector('.popup-image');
-    const popupImageImage = popupImage.querySelector('.popup-image__image');
-    const popupImageTitle = popupImage.querySelector('.popup-image__title');
-    openPopup(popupImage);
-    popupImageImage.src = evt.target.src;
-    popupImageImage.alt = evt.target.nextElementSibling.
-    firstElementChild.textContent;
-    popupImageTitle.textContent = evt.target.nextElementSibling.
-    firstElementChild.textContent;
-  } */
 }

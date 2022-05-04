@@ -96,7 +96,7 @@ class Popup {
   constructor(popupSelector) {
     this._popupSelector = document.querySelector(popupSelector);
   }
-  open(evt) {
+  open() {
     this._popupSelector.classList.add('popup_opened');
   }
   close() {
@@ -109,10 +109,10 @@ class Popup {
       this.close(activePopup);
     }
   }
-  setEventListeners(event) {
+  setEventListeners(evt) {
     const activePopup = document.querySelector('.popup_opened');
 
-    if (event.target.classList.contains('popup') || event.target.classList.contains('popup__close')) {
+    if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
       this.close(activePopup);
     }
   }
@@ -126,12 +126,12 @@ class PopupWithImage extends Popup {
     const popupImage = document.querySelector('.popup-image');
     const popupImageImage = popupImage.querySelector('.popup-image__image');
     const popupImageTitle = popupImage.querySelector('.popup-image__title');
-/*     popupImageImage.src = evt.target.src;
+    popupImageImage.src = evt.target.src;
     popupImageImage.alt = evt.target.nextElementSibling.
     firstElementChild.textContent;
     popupImageTitle.textContent = evt.target.nextElementSibling.
-    firstElementChild.textContent; */
-    super.open(evt);
+    firstElementChild.textContent;
+    super.open();
   }
 }
 
@@ -154,6 +154,8 @@ class PopupWithForm extends Popup {
     //
   }
 }
+const cardClick = new PopupWithImage('.popup-image');
+cardClick.setEventListeners(evt);
 
 const defaultCardList = new Section({
   data: initialCards,
@@ -161,13 +163,14 @@ const defaultCardList = new Section({
     const card = new Card({
       item,
       handleCardClick: (evt) => {
-        const cardClick = new PopupWithImage('.popup-image');
         cardClick.open(evt);
+
+        console.log("11");
       }
       }, '.template-element');
     const cardElement = card.renderCards();
     defaultCardList.setItem(cardElement);
-    card.cardClick();
+    //card.cardClick();
   }
 }, '.elements__grid');
 
