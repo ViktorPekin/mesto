@@ -1,3 +1,4 @@
+import './index.css';
 import {FormValidator} from '../scripts/components/Validate.js';
 import {Card} from '../scripts/components/Card.js';
 import {Section} from '../scripts/components/Section.js';
@@ -68,12 +69,14 @@ defaultCardList.renderItems();
 
 buttonOpenPopupProfil.addEventListener('click', () => {
   popupEditProfile.setInputValues(popupSaveProfile.getUserInfo());
+  validateProfile.resetErrors();
   popupEditProfile.open();
   popupEditProfile.setEventListeners();
   validateProfile.disabledButtonAdd(false);
 });
 
 buttonOpenPopupCards.addEventListener('click', () => {
+  validateCards.resetErrors();
   popupCardAdd.open();
   popupCardAdd.setEventListeners();
   validateCards.disabledButtonAdd(true);
