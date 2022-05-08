@@ -1,5 +1,5 @@
 import './index.css';
-import {FormValidator} from '../scripts/components/Validate.js';
+import {FormValidator} from '../scripts/components/FormValidator.js';
 import {Card} from '../scripts/components/Card.js';
 import {Section} from '../scripts/components/Section.js';
 import {PopupWithForm} from '../scripts/components/PopupWithForm.js';
@@ -23,41 +23,29 @@ const popupSaveProfile = new UserInfo('.profile__name', '.profile__sub-name');
 const popupEditProfile = new PopupWithForm({
   submitForm(evt){
     evt.preventDefault();
-    popupSaveProfile.setUserInfo(popupEditProfile.inputValues());
+    popupSaveProfile.setUserInfo(popupEditProfile.getInputValues());
     popupEditProfile.close();
   }},'.popup_edit-profile');
-
-const newCard = new Section({
-  renderer: (item) => {
-    const card = new Card({
-      item,
-      handleCardClick: (evt) => {
-        cardClick.open(evt);
-        cardClick.setEventListeners();
-      }
-      }, '.template-element');
-    const cardElement = card.renderCards();
-    newCard.setItem(cardElement);
-  }
-}, '.elements__grid');
+popupEditProfile.setEventListeners();
 
 const popupCardAdd = new PopupWithForm({
   submitForm(evt){
     evt.preventDefault();
-    newCard.renderItem(popupCardAdd.inputValues());
+    defaultCardList.renderItem(popupCardAdd.getInputValues());
     popupCardAdd.close();
 }},'.popup_cards-add');
+popupCardAdd.setEventListeners();
 
 const cardClick = new PopupWithImage('.popup-image');
+cardClick.setEventListeners();
 
 const defaultCardList = new Section({
   data: initialCards,
   renderer: (item) => {
     const card = new Card({
       item,
-      handleCardClick: (evt) => {
-        cardClick.open(evt);
-        cardClick.setEventListeners();
+      handleCardClick: () => {
+        cardClick.open(item.name, item.link);
       }
       }, '.template-element');
     const cardElement = card.renderCards();
@@ -68,16 +56,12 @@ const defaultCardList = new Section({
 defaultCardList.renderItems();
 
 buttonOpenPopupProfil.addEventListener('click', () => {
+  validateProfile.resetValidation();
   popupEditProfile.setInputValues(popupSaveProfile.getUserInfo());
-  validateProfile.resetErrors();
   popupEditProfile.open();
-  popupEditProfile.setEventListeners();
-  validateProfile.disabledButtonAdd(false);
 });
 
 buttonOpenPopupCards.addEventListener('click', () => {
-  validateCards.resetErrors();
+  validateCards.resetValidation();
   popupCardAdd.open();
-  popupCardAdd.setEventListeners();
-  validateCards.disabledButtonAdd(true);
 });

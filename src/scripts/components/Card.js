@@ -3,21 +3,22 @@ export class Card {
     this._card = item;
     this._template = document.querySelector(selectorTemplate).content;
     this._handleCardClick = handleCardClick;
+    this._element = this._template.querySelector('.element').cloneNode(true);
+    this._cardImage = this._element.querySelector('.element__image');
   }
 
   renderCards () {
-    const element = this._getTemplate();
-    element.querySelector('.element__text').textContent = this._card.name;
-    element.querySelector('.element__image').src = this._card.link;
-    element.querySelector('.element__image').alt = this._card.name;
-    element.querySelector('.element__delite').addEventListener('click', this._deliteCards);
-    element.querySelector('.element__like').addEventListener('click', this._toggleLikeCards);
-    element.querySelector('.element__image').addEventListener('click',this._handleCardClick);
-    return element;
+    this._element.querySelector('.element__text').textContent = this._card.name;
+    this._cardImage.src = this._card.link;
+    this._cardImage.alt = this._card.name;
+    this._setEventListeners();
+    return this._element;
   }
 
-  _getTemplate() {
-    return this._template.querySelector('.element').cloneNode(true);
+  _setEventListeners() {
+    this._element.querySelector('.element__delite').addEventListener('click', this._deliteCards);
+    this._element.querySelector('.element__like').addEventListener('click', this._toggleLikeCards);
+    this._cardImage.addEventListener('click',this._handleCardClick);
   }
 
   _toggleLikeCards (evt) {
