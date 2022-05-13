@@ -18,6 +18,16 @@ const validateCards = new FormValidator(config, popupCards);
 validateProfile.enableValidation();
 validateCards.enableValidation();
 
+fetch('https://mesto.nomoreparties.co/v1/cohort-41/cards', {
+  headers: {
+    authorization: '535d3a03-0687-4a91-b587-5369f637f559'
+  }
+})
+  .then(res => res.json())
+  .then((result) => {
+    console.log(result);
+  });
+
 const popupSaveProfile = new UserInfo('.profile__name', '.profile__sub-name');
 
 const popupEditProfile = new PopupWithForm({
