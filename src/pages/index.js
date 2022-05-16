@@ -1,31 +1,55 @@
 import './index.css';
+import { Api } from '../scripts/components/Api';
 import {FormValidator} from '../scripts/components/FormValidator.js';
 import {Card} from '../scripts/components/Card.js';
 import {Section} from '../scripts/components/Section.js';
 import {PopupWithForm} from '../scripts/components/PopupWithForm.js';
 import {PopupWithImage} from '../scripts/components/PopupWithImage.js';
 import {UserInfo} from '../scripts/components/UserInfo.js';
+import {PopupWithSubmit} from '../scripts/components/PopupWithSubmit';
 import {initialCards,
+  profileId,
   config,
   buttonOpenPopupProfil,
   buttonOpenPopupCards,
+  buttonOpenPopupAvatar,
   popupProfile,
-  popupCards} from '../scripts/utils/constants.js';
+  popupCards,
+  popupAvatar} from '../scripts/utils/constants.js';
 
 const validateProfile = new FormValidator(config, popupProfile);
 const validateCards = new FormValidator(config, popupCards);
+const validateAvatar = new FormValidator(config, popupAvatar);
 
 validateProfile.enableValidation();
 validateCards.enableValidation();
+validateAvatar.enableValidation();
 
-fetch('https://mesto.nomoreparties.co/v1/cohort-41/cards', {
-  headers: {
-    authorization: '535d3a03-0687-4a91-b587-5369f637f559'
-  }
-})
-  .then(res => res.json())
+const api = new Api();
+
+api.getInitialProfile()
   .then((result) => {
-    console.log(result);
+    const name = document.querySelector('.profile__name');
+    const about = document.querySelector('.profile__sub-name');
+    const avatar = document.querySelector('.profile__avatar');
+    name.textContent = result.name;
+    about.textContent = result.about;
+    avatar.src = result.avatar;
+    profileId.push(result._id);
+  }).catch((err) => {
+    console.log(err);
+  });
+
+api.getInitialCard()
+  .then((result) => {
+    result.forEach((item) => {
+      if (item.owner._id === profileId.join()) {
+        initialCards.push(item);
+      }
+    })
+    defaultCardList.renderItems();
+  }).catch((err) => {
+    console.log(err);
   });
 
 const popupSaveProfile = new UserInfo('.profile__name', '.profile__sub-name');
@@ -33,18 +57,50 @@ const popupSaveProfile = new UserInfo('.profile__name', '.profile__sub-name');
 const popupEditProfile = new PopupWithForm({
   submitForm(evt){
     evt.preventDefault();
-    popupSaveProfile.setUserInfo(popupEditProfile.getInputValues());
+    api.patchProfile(popupEditProfile.getInputValues())
+    .then((result) => {
+      popupSaveProfile.setUserInfo(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
     popupEditProfile.close();
   }},'.popup_edit-profile');
 popupEditProfile.setEventListeners();
 
+const popupDeliteCard = new PopupWithSubmit({
+  submitForm(evt){
+    evt.preventDefault();
+/*     const element = evt.currentTarget.closest('.element');
+    element.remove(); */
+  }},'.popup-delite-card');
+popupDeliteCard.setEventListeners();
+
+
+
 const popupCardAdd = new PopupWithForm({
   submitForm(evt){
     evt.preventDefault();
-    defaultCardList.renderItem(popupCardAdd.getInputValues());
+    api.addNewCard(popupCardAdd.getInputValues())
+    .then((result) => {
+      defaultCardList.renderItem(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
     popupCardAdd.close();
 }},'.popup_cards-add');
 popupCardAdd.setEventListeners();
+
+const popupEditAvatar = new PopupWithForm({
+  submitForm(evt){
+    evt.preventDefault();
+    const avatar = document.querySelector('.profile__avatar');
+    const linkAvatar = popupEditAvatar.getInputValues();
+    avatar.src = linkAvatar.link;
+    popupEditAvatar.close();
+}},'.popup-avatar');
+popupEditAvatar.setEventListeners();
 
 const cardClick = new PopupWithImage('.popup-image');
 cardClick.setEventListeners();
@@ -56,14 +112,18 @@ const defaultCardList = new Section({
       item,
       handleCardClick: () => {
         cardClick.open(item.name, item.link);
+      },
+      handleDeliteIconClick: () => {
+        popupDeliteCard.open();
       }
       }, '.template-element');
+    card.removeDeliteIcon(profileId.join(), item.owner._id, item);
     const cardElement = card.renderCards();
+    console.log(item)
+    card.remove();
     defaultCardList.setItem(cardElement);
   }
 }, '.elements__grid');
-
-defaultCardList.renderItems();
 
 buttonOpenPopupProfil.addEventListener('click', () => {
   validateProfile.resetValidation();
@@ -74,4 +134,9 @@ buttonOpenPopupProfil.addEventListener('click', () => {
 buttonOpenPopupCards.addEventListener('click', () => {
   validateCards.resetValidation();
   popupCardAdd.open();
+});
+
+buttonOpenPopupAvatar.addEventListener('click', () => {
+  validateAvatar.resetValidation();
+  popupEditAvatar.open();
 });
