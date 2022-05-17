@@ -7,6 +7,7 @@ export class Card {
     this._handleLikeClick = handleLikeClick;
     this._element = this._template.querySelector('.element').cloneNode(true);
     this._cardImage = this._element.querySelector('.element__image');
+    this._deliteIcon = this._element.querySelector('.element__delite');
   }
 
   renderCards () {
@@ -20,18 +21,19 @@ export class Card {
   }
 
   _setEventListeners() {
-    //this._element.querySelector('.element__delite').addEventListener('click', this._handleDeliteIconClick);
     this._element.querySelector('.element__like').addEventListener('click', this._toggleLikeCards);
     this._cardImage.addEventListener('click',this._handleCardClick);
   }
 
-  removeDeliteIcon(profileId, cardId, item) {
+  _setEventDelite() {
+    this._deliteIcon.addEventListener('click', this._handleDeliteIconClick);
+  }
 
+  removeDeliteIcon(profileId, cardId) {
     if(profileId !== cardId) {
-      console.log(item);
-      console.log(this._element);
-/*       const e = this._element.querySelector('.element__delite');
-      e.remove(); */
+      this._deliteIcon.remove();
+    } else {
+      this._setEventDelite();
     }
   }
 
@@ -40,7 +42,7 @@ export class Card {
     evt.target.classList.toggle('element__like_active');
   }
 
-  _deliteCards (evt) {
+  deliteCards (evt) {
     const element = evt.currentTarget.closest('.element');
     element.remove();
   }

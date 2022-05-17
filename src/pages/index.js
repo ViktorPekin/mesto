@@ -43,9 +43,7 @@ api.getInitialProfile()
 api.getInitialCard()
   .then((result) => {
     result.forEach((item) => {
-      if (item.owner._id === profileId.join()) {
-        initialCards.push(item);
-      }
+      initialCards.push(item);
     })
     defaultCardList.renderItems();
   }).catch((err) => {
@@ -71,19 +69,23 @@ popupEditProfile.setEventListeners();
 const popupDeliteCard = new PopupWithSubmit({
   submitForm(evt){
     evt.preventDefault();
-/*     const element = evt.currentTarget.closest('.element');
-    element.remove(); */
+    popupDeliteCard.close();
+    api.deliteCard(popupDeliteCard.getIdCard())
+    .then((result) => {
+      console.log(result)
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }},'.popup-delite-card');
 popupDeliteCard.setEventListeners();
-
-
 
 const popupCardAdd = new PopupWithForm({
   submitForm(evt){
     evt.preventDefault();
     api.addNewCard(popupCardAdd.getInputValues())
     .then((result) => {
-      defaultCardList.renderItem(result);
+      console.log(result)
     })
     .catch((err) => {
       console.log(err);
@@ -114,13 +116,12 @@ const defaultCardList = new Section({
         cardClick.open(item.name, item.link);
       },
       handleDeliteIconClick: () => {
+        popupDeliteCard.setIdCard(item._id);
         popupDeliteCard.open();
       }
       }, '.template-element');
-    card.removeDeliteIcon(profileId.join(), item.owner._id, item);
+    card.removeDeliteIcon(profileId.join(), item.owner._id);
     const cardElement = card.renderCards();
-    console.log(item)
-    card.remove();
     defaultCardList.setItem(cardElement);
   }
 }, '.elements__grid');
