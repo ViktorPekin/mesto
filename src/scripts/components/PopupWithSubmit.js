@@ -5,6 +5,8 @@ export class PopupWithSubmit extends Popup {
     this._submitForm = submitForm;
     this._form = this._popup.querySelector('.popup__form');
     this._id = '';
+    this._card = '';
+    this._cardElement = '';
   }
 
   setEventListeners() {
@@ -12,8 +14,18 @@ export class PopupWithSubmit extends Popup {
     this._form.addEventListener('submit', this._submitForm);
   }
 
-  setIdCard(id) {
-    this._id = id;
+  setCard(card, element) {
+    this._id = card._id;
+    this._card = card;
+    this._cardElement = element;
+  }
+
+  getCardElement() {
+    return this._cardElement;
+  }
+
+  getCard() {
+    return this._card;
   }
 
   getIdCard() {
