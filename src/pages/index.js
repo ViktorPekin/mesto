@@ -44,7 +44,7 @@ api.getInitialCard()
   .then((result) => {
     result.forEach((item) => {
       initialCards.push(item);
-    })
+    });
     defaultCardList.renderItems();
   }).catch((err) => {
     console.log(err);
@@ -72,7 +72,7 @@ const popupDeliteCard = new PopupWithSubmit({
     popupDeliteCard.close();
     api.deliteCard(popupDeliteCard.getIdCard())
     .then((result) => {
-      console.log(result)
+
     })
     .catch((err) => {
       console.log(err);
@@ -85,7 +85,7 @@ const popupCardAdd = new PopupWithForm({
     evt.preventDefault();
     api.addNewCard(popupCardAdd.getInputValues())
     .then((result) => {
-      console.log(result)
+      defaultCardList.renderItem(result);
     })
     .catch((err) => {
       console.log(err);
@@ -115,11 +115,32 @@ const defaultCardList = new Section({
       handleCardClick: () => {
         cardClick.open(item.name, item.link);
       },
+      handleLikeClick: (evt) => {
+        evt.target.classList.toggle('element__like_active');
+        if (evt.target.classList.contains('element__like_active')) {
+          api.addLike(item._id)
+          .then((result) => {
+            card.augmentNumberLike();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        } else {
+          api.deliteLike(item._id)
+          .then((result) => {
+            card.subtractNumberLike();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        }
+      },
       handleDeliteIconClick: () => {
         popupDeliteCard.setIdCard(item._id);
         popupDeliteCard.open();
       }
       }, '.template-element');
+    card.renderLike(profileId.join(), item.likes);
     card.removeDeliteIcon(profileId.join(), item.owner._id);
     const cardElement = card.renderCards();
     defaultCardList.setItem(cardElement);
