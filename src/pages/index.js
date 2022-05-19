@@ -40,40 +40,50 @@ api.getInitialProfile()
   }).then((result) => {
     result.forEach((item) => {
       initialCards.push(item);
-      })
+      });
+
     const popupSaveProfile = new UserInfo('.profile__name', '.profile__sub-name');
+
     const popupEditProfile = new PopupWithForm({
       submitForm(evt){
         evt.preventDefault();
+        popupEditAvatar.renderLoading(true);
         api.patchProfile(popupEditProfile.getInputValues())
         .then((result) => {
           popupSaveProfile.setUserInfo(result);
         })
         .catch((err) => {
           console.log(err);
+        })
+        .finally(() => {
+          popupEditAvatar.renderLoading(false, 'Сохранить');
+          popupEditProfile.close();
         });
-        popupEditProfile.close();
       }},'.popup_edit-profile');
     popupEditProfile.setEventListeners();
 
     const popupCardAdd = new PopupWithForm({
       submitForm(evt){
         evt.preventDefault();
+        popupCardAdd.renderLoading(true);
         api.addNewCard(popupCardAdd.getInputValues())
         .then((result) => {
           defaultCardList.renderItem(result);
         })
         .catch((err) => {
           console.log(err);
+        })
+        .finally(() => {
+          popupCardAdd.renderLoading(false, 'Создать');
+          popupCardAdd.close();
         });
-        popupCardAdd.close();
     }},'.popup_cards-add');
     popupCardAdd.setEventListeners();
 
     const popupDeliteCard = new PopupWithSubmit({
       submitForm(evt){
         evt.preventDefault();
-        popupDeliteCard.close();
+        popupDeliteCard.renderLoading(true);
         api.deliteCard(popupDeliteCard.getIdCard())
         .then((result) => {
           const element = popupDeliteCard.getCardElement();
@@ -81,6 +91,10 @@ api.getInitialProfile()
         })
         .catch((err) => {
           console.log(err);
+        })
+        .finally(() => {
+          popupDeliteCard.renderLoading(false, 'Да');
+          popupDeliteCard.close();
         });
       }},'.popup-delite-card');
     popupDeliteCard.setEventListeners();
@@ -88,10 +102,19 @@ api.getInitialProfile()
     const popupEditAvatar = new PopupWithForm({
       submitForm(evt){
         evt.preventDefault();
+        popupEditAvatar.renderLoading(true);
         const avatar = document.querySelector('.profile__avatar');
         const linkAvatar = popupEditAvatar.getInputValues();
-        avatar.src = linkAvatar.link;
-        popupEditAvatar.close();
+        api.patchAvatar(linkAvatar.link)
+        .then((result) => {
+          avatar.src = linkAvatar.link;
+        }).catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          popupEditAvatar.renderLoading(false, 'Сохранить');
+          popupEditAvatar.close();
+        });
     }},'.popup-avatar');
     popupEditAvatar.setEventListeners();
 
@@ -153,6 +176,7 @@ api.getInitialProfile()
       validateAvatar.resetValidation();
       popupEditAvatar.open();
     });
+
     defaultCardList.renderItems();
   }).catch((err) => {
     console.log(err);

@@ -2,6 +2,7 @@
   padding: 0;
   background-color: black;
   cursor: pointer;
+  border: none;
 }
 
 .profile__button-avatar:hover {

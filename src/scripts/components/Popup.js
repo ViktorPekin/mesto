@@ -2,6 +2,7 @@ export class Popup {
   constructor(popup) {
     this._popup = document.querySelector(popup);
     this._handleEscClose = this._handleEscClose.bind(this);
+    this._button = this._popup.querySelector('.popup__button');
   }
   open() {
     this._popup.classList.add('popup_opened');
@@ -22,6 +23,13 @@ export class Popup {
   _handleOverlayClose(evt) {
     if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')) {
     this.close();
+    }
+  }
+  renderLoading(isLoading, defaultText) {
+    if (isLoading) {
+      this._button.textContent = 'Сохранение...';
+    } else {
+      this._button.textContent = defaultText;
     }
   }
 }
