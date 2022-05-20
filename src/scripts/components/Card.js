@@ -64,10 +64,6 @@ export class Card {
     this._likeNumber.textContent = item.likes.length;
   }
 
-  subtractNumberLike() {
-    this._likeNumber.textContent = Number(this._likeNumber.textContent) - 1;
-  }
-
   _removeDeliteIcon() {
     if(this._profileId !== this._card.owner._id) {
       this._deliteIcon.remove();
