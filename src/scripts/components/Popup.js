@@ -13,7 +13,7 @@ export class Popup {
     document.removeEventListener('keydown', this._handleEscClose);
   }
   setEventListeners() {
-    this._popup.addEventListener('click',this._handleOverlayClose.bind(this));
+    this._popup.addEventListener('mousedown',this._handleOverlayClose.bind(this));
   }
   _handleEscClose(evt) {
     if (evt.key === 'Escape') {

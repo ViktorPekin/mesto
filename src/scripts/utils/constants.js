@@ -1,7 +1,3 @@
-export const initialCards = [];
-
-//export let profileId = '';
-
 export const config = {
   form: '.popup__form',
   input: '.popup__input',
