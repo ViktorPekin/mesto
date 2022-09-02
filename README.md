@@ -6,5 +6,8 @@
 ## Технологии
 Html / Css / БЭМ / БЭМ Nested / Адаптивная верска / JavaScript / ООП / Webpack / Работа с API
 
+## Запуск проекта
+npm run dev
+
 ## GitHub Pages
 https://viktorpekin.github.io/mesto/
