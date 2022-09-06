@@ -4,10 +4,13 @@
 Фотогалерея с возможностью добавлять фотографии, редактировать профиль, открывать фото. Проект подключен к внешнему API. 
 
 ## Технологии
-Html / Css / БЭМ / БЭМ Nested / Адаптивная верска / JavaScript / ООП / Webpack / Работа с API
+HTML / CSS / БЭМ / БЭМ Nested / Адаптивная верска / JavaScript / ООП / Webpack / Работа с API
 
 ## Запуск проекта
 npm run dev
 
 ## GitHub Pages
 https://viktorpekin.github.io/mesto/
+
+## Статус
+-✅ Завершен
